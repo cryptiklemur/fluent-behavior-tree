@@ -8,7 +8,7 @@
         "url": "git+ssh://git@github.com/aequasi/fluent-behavior-tree"
     },
     "scripts": {
-        "test": "rm -r test/dist; tsc -v && tsc -p test/",
+        "test": "rm -r test/dist; tsc -v && tsc -p test/ && ava -v",
         "compile": "npm run lint && tsc -p ./",
         "precommit": "npm run compile",
         "prepublishOnly": "npm run compile",
@@ -22,9 +22,20 @@
         "ts-iterable": "^1.0.1"
     },
     "devDependencies": {
+        "@types/es6-promise": "0.0.33",
+        "ava": "^0.24.0",
         "husky": "^0.14.3",
         "tslint": "^5.8.0",
+        "typemoq": "^2.1.0",
         "typescript": "^2.6.2"
+    },
+    "ava": {
+        "files": [
+            "test/dist/**/*Test.js"
+        ],
+        "source": [
+            "dist/**/*.js"
+        ]
     },
     "bugs": {
         "url": "https://github.com/aequasi/fluent-behavior-tree/issues"

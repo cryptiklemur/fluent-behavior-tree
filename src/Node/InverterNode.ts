@@ -19,7 +19,7 @@ export default class InverterNode implements ParentBehaviorTreeNodeInterface {
     }
 
     public async tick(time: TimeData): Promise<BehaviorTreeStatus> {
-        if (this.childNode === null) {
+        if (!this.childNode) {
             throw new BehaviorTreeError("InverterNode must have a child node!");
         }
 
@@ -34,7 +34,7 @@ export default class InverterNode implements ParentBehaviorTreeNodeInterface {
     }
 
     public addChild(child: BehaviorTreeNodeInterface): void {
-        if (this.childNode !== null) {
+        if (!!this.childNode) {
             throw new BehaviorTreeError("Can't add more than a single child to InverterNode!");
         }
 
