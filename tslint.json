@@ -1,0 +1,32 @@
+{
+    "extends":        "tslint:recommended",
+    "rules":          {
+        "curly":                    true,
+        "variable-name":            [
+            true,
+            "ban-keywords",
+            "check-format",
+            "allow-leading-underscore",
+            "allow-pascal-case"
+        ],
+        "no-console":               false,
+        "no-bitwise":               false,
+        "no-empty":                 false,
+        "no-eval":                  false,
+        "no-string-literal":        false,
+        "object-literal-sort-keys": false,
+        "no-var-requires":          false,
+        "interface-name":           [
+            true,
+            "never-prefix"
+        ]
+    },
+    "exclude":        [
+        "src/extensions.ts"
+    ],
+    "jsRules":        {
+        "curly": true
+    },
+    "rulesDirectory": [
+    ]
+}

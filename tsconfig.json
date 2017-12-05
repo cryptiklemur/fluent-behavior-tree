@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "moduleResolution":       "Node",
+        "module":                 "commonjs",
+        "target":                 "es6",
+        "sourceMap":              true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata":  true,
+        "noImplicitAny":          false,
+        "noImplicitThis":         true,
+        "declaration":            true,
+        "outDir":                 "./dist",
+        "lib":                    [
+            "es2017.object",
+            "es2015",
+            "es2017",
+            "esnext"
+        ],
+        "pretty":                 true,
+        "skipLibCheck":           true
+    },
+    "include":         [
+        "./src/**/*.ts"
+    ]
+}

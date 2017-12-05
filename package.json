@@ -1,0 +1,32 @@
+{
+    "name": "fluent-behavior-tree",
+    "version": "0.1.0",
+    "description": "Behavior tree library with a fluent API",
+    "main": "dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/aequasi/fluent-behavior-tree"
+    },
+    "scripts": {
+        "test": "rm -r test/dist; tsc -v && tsc -p test/",
+        "compile": "npm run lint && tsc -p ./",
+        "precommit": "npm run compile",
+        "prepublishOnly": "npm run compile",
+        "lint": "tslint -c tslint.json 'src/**/*.ts' --exclude 'src/**/*.d.ts' --fix",
+        "watch": "nodemon -e ts -w src --exec 'npm run compile'"
+    },
+    "author": "Aaron Scherer <aequasi@gmail.com> (http://aaronscherer.me)",
+    "license": "MIT",
+    "dependencies": {
+        "ts-data.stack": "^1.0.6"
+    },
+    "devDependencies": {
+        "husky": "^0.14.3",
+        "tslint": "^5.8.0",
+        "typescript": "^2.6.2"
+    },
+    "bugs": {
+        "url": "https://github.com/aequasi/fluent-behavior-tree/issues"
+    },
+    "homepage": "https://github.com/aequasi/fluent-behavior-tree#readme"
+}
