@@ -30,15 +30,15 @@ export default class SequenceNode implements ParentBehaviorTreeNodeInterface {
     }
 
     public async tick(time: TimeData): Promise<BehaviorTreeStatus> {
-        if (this.enumerator === null) {
+        if (!this.enumerator) {
             this.init();
         }
 
-        if (this.enumerator.current !== null) {
-            this.enumerator.next();
+        if (!this.enumerator.current) {
+            return BehaviorTreeStatus.Running;
         }
 
-        while (this.enumerator.current !== null) {
+        do {
             const status = await this.enumerator.current.tick(time);
             if (status !== BehaviorTreeStatus.Success) {
                 if (status === BehaviorTreeStatus.Failure) {
@@ -47,10 +47,8 @@ export default class SequenceNode implements ParentBehaviorTreeNodeInterface {
 
                 return status;
             }
-            if (!this.enumerator.hasNext()) {
-                break;
-            }
-        }
+
+        } while (this.enumerator.next());
         this.enumerator.reset();
 
         return BehaviorTreeStatus.Success;

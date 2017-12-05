@@ -1,7 +1,7 @@
 import BehaviorTreeNodeInterface from "./Node/BehaviorTreeNodeInterface";
 
 export default class NodeEnumerator implements Iterable<BehaviorTreeNodeInterface> {
-    private currentIndex: number = 0;
+    public currentIndex: number = 0;
 
     public get current(): BehaviorTreeNodeInterface {
         return this.nodes[this.currentIndex];
@@ -28,12 +28,18 @@ export default class NodeEnumerator implements Iterable<BehaviorTreeNodeInterfac
         };
     }
 
-    public next(): number {
-        return this.currentIndex++;
+    public next(): boolean {
+        if (this.hasNext()) {
+            this.currentIndex++;
+
+            return true;
+        }
+
+        return false;
     }
 
     public hasNext(): boolean {
-        return this.nodes[this.currentIndex + 1] !== undefined;
+        return !!this.nodes[this.currentIndex + 1];
     }
 
     public reset(): void {

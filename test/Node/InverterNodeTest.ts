@@ -5,6 +5,7 @@ import InverterNode from "../../src/Node/InverterNode";
 import BehaviorTreeNodeInterface from "../../src/Node/BehaviorTreeNodeInterface";
 import BehaviorTreeStatus from "../../src/BehaviorTreeStatus";
 import BehaviorTreeError from "../../src/Error/BehaviorTreeError";
+import Errors from "../../src/Error/Errors";
 
 let testObject: InverterNode;
 test.beforeEach(() => {
@@ -18,10 +19,9 @@ test.afterEach.always(() => {
 test("ticking with no child node throws error", async (assert) => {
     try {
         await testObject.tick(new TimeData());
-        assert.throws(() => {
-        }, null, "should have thrown");
     } catch (e) {
-        assert.is(e.message, "InverterNode must have a child node!");
+        assert.throws(() => {throw e}, BehaviorTreeError, "should have thrown");
+        assert.is(e.message, Errors.INVERTER_NO_CHILDREN);
     }
 });
 
@@ -70,5 +70,5 @@ test("adding more than a single child throws exception", async (assert) => {
         () => testObject.addChild(TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>() as any),
         BehaviorTreeError,
     );
-    assert.is(error.message, "Can't add more than a single child to InverterNode!");
+    assert.is(error.message, Errors.INVERTER_MULTIPLE_CHILDREN);
 });

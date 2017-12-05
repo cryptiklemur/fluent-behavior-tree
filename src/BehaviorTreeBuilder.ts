@@ -9,6 +9,7 @@ import ParentBehaviorTreeNodeInterface from "./Node/ParentBehaviorTreeNodeInterf
 import SelectorNode from "./Node/SelectorNode";
 import SequenceNode from "./Node/SequenceNode";
 import TimeData from "./TimeData";
+import Errors from "./Error/Errors";
 
 export default class BehaviorTreeBuilder {
     /**
@@ -32,7 +33,7 @@ export default class BehaviorTreeBuilder {
      */
     public do(name: string, fn: (time: TimeData) => Promise<BehaviorTreeStatus>): BehaviorTreeBuilder {
         if (this.parentNodeStack.isEmpty()) {
-            throw new BehaviorTreeError("Can't create an unnested ActionNode. It must be a leaf node.");
+            throw new BehaviorTreeError(Errors.UNNESTED_ACTION_NODE);
         }
 
         const actionNode = new ActionNode(name, fn);
@@ -95,23 +96,31 @@ export default class BehaviorTreeBuilder {
     }
 
     /**
-     * Build the actual tree.
+     * Splice a sub tree into the parent tree.
      *
      * @param {BehaviorTreeNodeInterface} subTree
      * @returns {BehaviorTreeBuilder}
      */
-    public splice(subTree?: BehaviorTreeNodeInterface): BehaviorTreeBuilder {
-        if (subTree === null) {
-            throw new BehaviorTreeError("subTree cannot be null");
-        }
-
+    public splice(subTree: BehaviorTreeNodeInterface): BehaviorTreeBuilder {
         if (this.parentNodeStack.isEmpty()) {
-            throw new BehaviorTreeError("Can't splice an unnested sub-tree. There must be a parent-tree.");
+            throw new BehaviorTreeError(Errors.SPLICE_UNNESTED_TREE);
         }
 
         this.parentNodeStack.peek().addChild(subTree);
 
         return this;
+    }
+
+    /**
+     * Build the actual tree
+     * @returns {BehaviorTreeNodeInterface}
+     */
+    public build(): BehaviorTreeNodeInterface {
+            if (!this.curNode) {
+                throw new BehaviorTreeError(Errors.NO_NODES)
+            }
+
+            return this.curNode;
     }
 
     /**

@@ -15,7 +15,7 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
      *
      * @type {BehaviorTreeNodeInterface[]}
      */
-    private children: BehaviorTreeNodeInterface[];
+    private children: BehaviorTreeNodeInterface[] = [];
 
     /**
      * Enumerator to keep state
@@ -30,15 +30,15 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
     }
 
     public async tick(time: TimeData): Promise<BehaviorTreeStatus> {
-        if (this.enumerator === null) {
+        if (!this.enumerator) {
             this.init();
         }
 
-        if (this.enumerator.current !== null) {
-            this.enumerator.next();
+        if (!this.enumerator.current) {
+            return BehaviorTreeStatus.Running;
         }
 
-        while (this.enumerator.current !== null) {
+        do {
             const status = await this.enumerator.current.tick(time);
             if (status !== BehaviorTreeStatus.Failure) {
                 if (status === BehaviorTreeStatus.Success) {
@@ -48,10 +48,7 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
                 return status;
             }
 
-            if (!this.enumerator.hasNext()) {
-                break;
-            }
-        }
+        } while (this.enumerator.next());
         this.enumerator.reset();
 
         return BehaviorTreeStatus.Failure;
