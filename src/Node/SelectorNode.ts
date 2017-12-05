@@ -2,6 +2,7 @@ import BehaviorTreeStatus from "../BehaviorTreeStatus";
 import TimeData from "../TimeData";
 import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import ParentBehaviorTreeNodeInterface from "./ParentBehaviorTreeNodeInterface";
+import NodeEnumerator from "../NodeEnumerator";
 
 /**
  * Selects the first node that succeeds. Tries successive nodes until it finds one that doesn't fail.
@@ -14,18 +15,44 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
      *
      * @type {BehaviorTreeNodeInterface[]}
      */
-    private children: BehaviorTreeNodeInterface[] = [];
+    private children: BehaviorTreeNodeInterface[];
+
+    /**
+     * Enumerator to keep state
+     */
+    private enumerator?: NodeEnumerator;
 
     public constructor(public readonly name: string) {
     }
 
+    public init(): void {
+        this.enumerator = new NodeEnumerator(this.children);
+    }
+
     public async tick(time: TimeData): Promise<BehaviorTreeStatus> {
-        for (const child of this.children) {
-            const status: BehaviorTreeStatus = await child.tick(time);
+        if (this.enumerator === null) {
+            this.init();
+        }
+
+        if (this.enumerator.current !== null) {
+            this.enumerator.next();
+        }
+
+        while(this.enumerator.current !== null) {
+            const status = await this.enumerator.current.tick(time);
             if (status !== BehaviorTreeStatus.Failure) {
+                if (status === BehaviorTreeStatus.Success) {
+                    this.enumerator.reset();
+                }
+
                 return status;
             }
+
+            if (!this.enumerator.hasNext()) {
+                break;
+            }
         }
+        this.enumerator.reset();
 
         return BehaviorTreeStatus.Failure;
     }
