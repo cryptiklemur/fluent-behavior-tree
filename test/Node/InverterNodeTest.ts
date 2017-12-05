@@ -1,6 +1,6 @@
 import test from "ava";
 import * as TypeMoq from "typemoq";
-import TimeData from "../../src/TimeData";
+import StateData from "../../src/StateData";
 import InverterNode from "../../src/Node/InverterNode";
 import BehaviorTreeNodeInterface from "../../src/Node/BehaviorTreeNodeInterface";
 import BehaviorTreeStatus from "../../src/BehaviorTreeStatus";
@@ -18,7 +18,7 @@ test.afterEach.always(() => {
 
 test("ticking with no child node throws error", async (assert) => {
     try {
-        await testObject.tick(new TimeData());
+        await testObject.tick(new StateData());
     } catch (e) {
         assert.throws(() => {throw e}, BehaviorTreeError, "should have thrown");
         assert.is(e.message, Errors.INVERTER_NO_CHILDREN);
@@ -26,42 +26,42 @@ test("ticking with no child node throws error", async (assert) => {
 });
 
 test("inverts success of child node", async (assert) => {
-    const time          = new TimeData();
+    const state          = new StateData();
     const mockChildNode = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
 
     mockChildNode
-        .setup(async (m) => await m.tick(time))
+        .setup(async (m) => await m.tick(state))
         .returns(() => Promise.resolve(BehaviorTreeStatus.Success));
 
     testObject.addChild(mockChildNode.object);
-    assert.is(BehaviorTreeStatus.Failure, await testObject.tick(time));
-    mockChildNode.verify((m) => m.tick(time), TypeMoq.Times.once());
+    assert.is(BehaviorTreeStatus.Failure, await testObject.tick(state));
+    mockChildNode.verify((m) => m.tick(state), TypeMoq.Times.once());
 });
 
 test("inverts failure of child node", async (assert) => {
-    const time          = new TimeData();
+    const state          = new StateData();
     const mockChildNode = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
 
     mockChildNode
-        .setup(async (m) => await m.tick(time))
+        .setup(async (m) => await m.tick(state))
         .returns(() => Promise.resolve(BehaviorTreeStatus.Failure));
 
     testObject.addChild(mockChildNode.object);
-    assert.is(BehaviorTreeStatus.Success, await testObject.tick(time));
-    mockChildNode.verify((m) => m.tick(time), TypeMoq.Times.once());
+    assert.is(BehaviorTreeStatus.Success, await testObject.tick(state));
+    mockChildNode.verify((m) => m.tick(state), TypeMoq.Times.once());
 });
 
 test("pass through running of child node", async (assert) => {
-    const time          = new TimeData();
+    const state          = new StateData();
     const mockChildNode = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
 
     mockChildNode
-        .setup(async (m) => await m.tick(time))
+        .setup(async (m) => await m.tick(state))
         .returns(() => Promise.resolve(BehaviorTreeStatus.Running));
 
     testObject.addChild(mockChildNode.object);
-    assert.is(BehaviorTreeStatus.Running, await testObject.tick(time));
-    mockChildNode.verify((m) => m.tick(time), TypeMoq.Times.once());
+    assert.is(BehaviorTreeStatus.Running, await testObject.tick(state));
+    mockChildNode.verify((m) => m.tick(state), TypeMoq.Times.once());
 });
 
 test("adding more than a single child throws exception", async (assert) => {

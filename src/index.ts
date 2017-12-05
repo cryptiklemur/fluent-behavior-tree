@@ -9,7 +9,7 @@ import ParallelNode from "./Node/ParallelNode";
 import ParentBehaviorTreeNodeInterface from "./Node/ParentBehaviorTreeNodeInterface";
 import SelectorNode from "./Node/SelectorNode";
 import SequenceNode from "./Node/SequenceNode";
-import TimeData from "./TimeData";
+import TimeData from "./StateData";
 
 export {
     BehaviorTreeBuilder,

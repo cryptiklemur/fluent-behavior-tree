@@ -1,10 +1,9 @@
 import test from "ava";
-import * as TypeMoq from "typemoq";
 import BehaviorTreeBuilder from "../src/BehaviorTreeBuilder";
 import BehaviorTreeError from "../src/Error/BehaviorTreeError";
 import BehaviorTreeStatus from "../src/BehaviorTreeStatus";
 import InverterNode from "../src/Node/InverterNode";
-import TimeData from "../src/TimeData";
+import StateData from "../src/StateData";
 import SequenceNode from "../src/Node/SequenceNode";
 import ParallelNode from "../src/Node/ParallelNode";
 import SelectorNode from "../src/Node/SelectorNode";
@@ -41,7 +40,7 @@ test("can create inverter node", async (assert) => {
         .build();
 
     assert.is(InverterNode, node.constructor);
-    assert.is(BehaviorTreeStatus.Failure, await node.tick(new TimeData()));
+    assert.is(BehaviorTreeStatus.Failure, await node.tick(new StateData()));
 });
 
 test("can't create an unbalanced behavior tree", async (assert) => {
@@ -63,7 +62,7 @@ test("condition is syntactic sugar for do", async (assert) => {
         .build();
 
     assert.is(InverterNode, node.constructor);
-    assert.is(BehaviorTreeStatus.Failure, await node.tick(new TimeData()));
+    assert.is(BehaviorTreeStatus.Failure, await node.tick(new StateData()));
 });
 
 test("can invert an inverter", async (assert) => {
@@ -77,7 +76,7 @@ test("can invert an inverter", async (assert) => {
         .build();
 
     assert.is(InverterNode, node.constructor);
-    assert.is(BehaviorTreeStatus.Success, await node.tick(new TimeData()));
+    assert.is(BehaviorTreeStatus.Success, await node.tick(new StateData()));
 });
 
 test("adding more than a single child to inverter throws exception", async (assert) => {
@@ -113,7 +112,7 @@ test("can create a sequence", async (assert) => {
         .build();
 
     assert.is(SequenceNode, sequence.constructor);
-    assert.is(BehaviorTreeStatus.Success, await sequence.tick(new TimeData()));
+    assert.is(BehaviorTreeStatus.Success, await sequence.tick(new StateData()));
     assert.is(2, invokeCount);
 });
 
@@ -136,7 +135,7 @@ test("can create a parallel", async (assert) => {
         .build();
 
     assert.is(ParallelNode, parallel.constructor);
-    assert.is(BehaviorTreeStatus.Success, await parallel.tick(new TimeData()));
+    assert.is(BehaviorTreeStatus.Success, await parallel.tick(new StateData()));
     assert.is(2, invokeCount);
 });
 
@@ -159,7 +158,7 @@ test("can create a selector", async (assert) => {
         .build();
 
     assert.is(SelectorNode, selector.constructor);
-    assert.is(BehaviorTreeStatus.Success, await selector.tick(new TimeData()));
+    assert.is(BehaviorTreeStatus.Success, await selector.tick(new StateData()));
     assert.is(2, invokeCount);
 });
 
@@ -183,7 +182,7 @@ test("can splice sub tree", async (assert) => {
         .end()
         .build();
 
-    await tree.tick(new TimeData);
+    await tree.tick(new StateData);
 
     assert.is(2, invokeCount);
 });

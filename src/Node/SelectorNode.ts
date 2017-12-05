@@ -1,6 +1,6 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
 import NodeEnumerator from "../NodeEnumerator";
-import TimeData from "../TimeData";
+import StateData from "../StateData";
 import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import ParentBehaviorTreeNodeInterface from "./ParentBehaviorTreeNodeInterface";
 
@@ -29,7 +29,7 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
         this.enumerator = new NodeEnumerator(this.children);
     }
 
-    public async tick(time: TimeData): Promise<BehaviorTreeStatus> {
+    public async tick(state: StateData): Promise<BehaviorTreeStatus> {
         if (!this.enumerator) {
             this.init();
         }
@@ -39,7 +39,7 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
         }
 
         do {
-            const status = await this.enumerator.current.tick(time);
+            const status = await this.enumerator.current.tick(state);
             if (status !== BehaviorTreeStatus.Failure) {
                 if (status === BehaviorTreeStatus.Success) {
                     this.enumerator.reset();

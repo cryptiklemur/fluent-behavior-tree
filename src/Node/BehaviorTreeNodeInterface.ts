@@ -1,6 +1,6 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
-import TimeData from "../TimeData";
+import StateData from "../StateData";
 
 export default interface BehaviorTreeNodeInterface {
-    tick(time: TimeData): Promise<BehaviorTreeStatus>;
+    tick(state: StateData): Promise<BehaviorTreeStatus>;
 }

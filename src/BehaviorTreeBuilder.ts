@@ -9,7 +9,7 @@ import ParallelNode from "./Node/ParallelNode";
 import ParentBehaviorTreeNodeInterface from "./Node/ParentBehaviorTreeNodeInterface";
 import SelectorNode from "./Node/SelectorNode";
 import SequenceNode from "./Node/SequenceNode";
-import TimeData from "./TimeData";
+import StateData from "./StateData";
 
 export default class BehaviorTreeBuilder {
     /**
@@ -28,10 +28,10 @@ export default class BehaviorTreeBuilder {
      * Create an action node.
      *
      * @param {string} name
-     * @param {(time: TimeData) => BehaviorTreeStatus} fn
+     * @param {(state: StateData) => BehaviorTreeStatus} fn
      * @returns {BehaviorTreeBuilder}
      */
-    public do(name: string, fn: (time: TimeData) => Promise<BehaviorTreeStatus>): BehaviorTreeBuilder {
+    public do(name: string, fn: (state: StateData) => Promise<BehaviorTreeStatus>): BehaviorTreeBuilder {
         if (this.parentNodeStack.isEmpty()) {
             throw new BehaviorTreeError(Errors.UNNESTED_ACTION_NODE);
         }
@@ -46,10 +46,10 @@ export default class BehaviorTreeBuilder {
      * Like an action node... but the function can return true/false and is mapped to success/failure.
      *
      * @param {string} name
-     * @param {(time: TimeData) => boolean} fn
+     * @param {(state: StateData) => boolean} fn
      * @returns {BehaviorTreeBuilder}
      */
-    public condition(name: string, fn: (time: TimeData) => Promise<boolean>): BehaviorTreeBuilder {
+    public condition(name: string, fn: (state: StateData) => Promise<boolean>): BehaviorTreeBuilder {
         return this.do(name, async (t) => await fn(t) ? BehaviorTreeStatus.Success : BehaviorTreeStatus.Failure);
     }
 

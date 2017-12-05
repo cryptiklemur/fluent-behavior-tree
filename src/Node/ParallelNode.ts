@@ -1,5 +1,5 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
-import TimeData from "../TimeData";
+import StateData from "../StateData";
 import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import ParentBehaviorTreeNodeInterface from "./ParentBehaviorTreeNodeInterface";
 
@@ -25,8 +25,8 @@ export default class ParallelNode implements ParentBehaviorTreeNodeInterface {
     ) {
     }
 
-    public async tick(time: TimeData): Promise<BehaviorTreeStatus> {
-        const statuses: BehaviorTreeStatus[] = await Promise.all(this.children.map((c) => this.tickChildren(time, c)));
+    public async tick(state: StateData): Promise<BehaviorTreeStatus> {
+        const statuses: BehaviorTreeStatus[] = await Promise.all(this.children.map((c) => this.tickChildren(state, c)));
         const succeeded                      = statuses.filter((x) => x === BehaviorTreeStatus.Success).length;
         const failed                         = statuses.filter((x) => x === BehaviorTreeStatus.Failure).length;
 
@@ -44,9 +44,9 @@ export default class ParallelNode implements ParentBehaviorTreeNodeInterface {
         this.children.push(child);
     }
 
-    private async tickChildren(time: TimeData, child: BehaviorTreeNodeInterface): Promise<BehaviorTreeStatus> {
+    private async tickChildren(state: StateData, child: BehaviorTreeNodeInterface): Promise<BehaviorTreeStatus> {
         try {
-            return await child.tick(time);
+            return await child.tick(state);
         } catch (e) {
             return BehaviorTreeStatus.Failure;
         }

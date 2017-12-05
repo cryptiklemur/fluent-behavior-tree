@@ -1,7 +1,7 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
 import BehaviorTreeError from "../Error/BehaviorTreeError";
 import Errors from "../Error/Errors";
-import TimeData from "../TimeData";
+import StateData from "../StateData";
 import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import ParentBehaviorTreeNodeInterface from "./ParentBehaviorTreeNodeInterface";
 
@@ -19,12 +19,12 @@ export default class InverterNode implements ParentBehaviorTreeNodeInterface {
     public constructor(public readonly name: string) {
     }
 
-    public async tick(time: TimeData): Promise<BehaviorTreeStatus> {
+    public async tick(state: StateData): Promise<BehaviorTreeStatus> {
         if (!this.childNode) {
             throw new BehaviorTreeError(Errors.INVERTER_NO_CHILDREN);
         }
 
-        const result = await this.childNode.tick(time);
+        const result = await this.childNode.tick(state);
         if (result === BehaviorTreeStatus.Failure) {
             return BehaviorTreeStatus.Success;
         } else if (result === BehaviorTreeStatus.Success) {
