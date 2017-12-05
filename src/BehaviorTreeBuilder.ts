@@ -1,6 +1,7 @@
 import Stack from "ts-data.stack";
 import BehaviorTreeStatus from "./BehaviorTreeStatus";
 import BehaviorTreeError from "./Error/BehaviorTreeError";
+import Errors from "./Error/Errors";
 import ActionNode from "./Node/ActionNode";
 import BehaviorTreeNodeInterface from "./Node/BehaviorTreeNodeInterface";
 import InverterNode from "./Node/InverterNode";
@@ -9,7 +10,6 @@ import ParentBehaviorTreeNodeInterface from "./Node/ParentBehaviorTreeNodeInterf
 import SelectorNode from "./Node/SelectorNode";
 import SequenceNode from "./Node/SequenceNode";
 import TimeData from "./TimeData";
-import Errors from "./Error/Errors";
 
 export default class BehaviorTreeBuilder {
     /**
@@ -117,7 +117,7 @@ export default class BehaviorTreeBuilder {
      */
     public build(): BehaviorTreeNodeInterface {
             if (!this.curNode) {
-                throw new BehaviorTreeError(Errors.NO_NODES)
+                throw new BehaviorTreeError(Errors.NO_NODES);
             }
 
             return this.curNode;

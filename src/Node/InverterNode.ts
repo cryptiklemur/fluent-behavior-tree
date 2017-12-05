@@ -1,9 +1,9 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
 import BehaviorTreeError from "../Error/BehaviorTreeError";
+import Errors from "../Error/Errors";
 import TimeData from "../TimeData";
 import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import ParentBehaviorTreeNodeInterface from "./ParentBehaviorTreeNodeInterface";
-import Errors from "../Error/Errors";
 
 /**
  * Decorator node that inverts the success/failure of its child.
