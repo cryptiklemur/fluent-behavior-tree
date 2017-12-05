@@ -1,4 +1,4 @@
-# Fluent Behavior Tree
+# Fluent Behavior Tree [![npm version](https://badge.fury.io/js/fluent-behavior-tree.svg)](https://badge.fury.io/js/fluent-behavior-tree)
 
 This is a Typescript/Javascript implementation of https://github.com/codecapers/Fluent-Behaviour-Tree
 
