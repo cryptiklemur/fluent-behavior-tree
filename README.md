@@ -28,7 +28,7 @@ npm install -s fluent-behavior-tree
 A behavior tree is created through *BehaviorTreeBuilder*. The tree is returned when the *build* function is called.
 
 ```
-const {BehaviorTreeBuilder, BehaviorTreeStatus, TimeData} = require('fluent-behavior-tree');
+import {BehaviorTreeBuilder, BehaviorTreeStatus, TimeData} from "fluent-behavior-tree";
 
 // ...
 
