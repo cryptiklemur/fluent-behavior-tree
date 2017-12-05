@@ -1,4 +1,5 @@
-# Fluent Behavior Tree [![npm version](https://badge.fury.io/js/fluent-behavior-tree.svg)](https://badge.fury.io/js/fluent-behavior-tree)
+# Fluent Behavior Tree
+[![Build Status](https://travis-ci.org/aequasi/fluent-behavior-tree.svg?branch=master)](https://travis-ci.org/aequasi/fluent-behavior-tree) [![npm version](https://badge.fury.io/js/fluent-behavior-tree.svg)](https://badge.fury.io/js/fluent-behavior-tree)
 
 This is a Typescript/Javascript implementation of https://github.com/codecapers/Fluent-Behaviour-Tree
 
