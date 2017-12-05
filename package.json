@@ -1,6 +1,6 @@
 {
     "name": "fluent-behavior-tree",
-    "version": "0.2.0",
+    "version": "1.0.0",
     "description": "Behavior tree library with a fluent API",
     "main": "dist/index.js",
     "repository": {
