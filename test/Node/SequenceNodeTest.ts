@@ -89,3 +89,28 @@ test("when second child fails, then entire sequence fails", async (assert) => {
     mockChild1.verify((m) => m.tick(time), TypeMoq.Times.once());
     mockChild2.verify((m) => m.tick(time), TypeMoq.Times.once());
 });
+
+test("only evaluates the current node", async (assert) => {
+    init();
+    const time       = new TimeData();
+    const mockChild1 = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
+    mockChild1.setup(async (m) => await m.tick(time))
+              .returns(() => Promise.resolve(BehaviorTreeStatus.Success));
+    const mockChild2 = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
+    mockChild2.setup(async (m) => await m.tick(time))
+              .returns(() => Promise.resolve(BehaviorTreeStatus.Running));
+    const mockChild3 = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
+    mockChild3.setup(async (m) => await m.tick(time))
+              .returns(() => Promise.resolve(BehaviorTreeStatus.Failure));
+
+    testObject.addChild(mockChild1.object);
+    testObject.addChild(mockChild2.object);
+    testObject.addChild(mockChild3.object);
+
+    assert.is(BehaviorTreeStatus.Running, await testObject.tick(time));
+    assert.is(BehaviorTreeStatus.Running, await testObject.tick(time));
+
+    mockChild1.verify((m) => m.tick(time), TypeMoq.Times.once());
+    mockChild2.verify((m) => m.tick(time), TypeMoq.Times.exactly(2));
+    mockChild3.verify((m) => m.tick(time), TypeMoq.Times.never());
+});
