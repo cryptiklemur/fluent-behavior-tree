@@ -4,7 +4,7 @@ export default class NodeEnumerator implements Iterable<BehaviorTreeNodeInterfac
     private currentIndex: number = 0;
 
     public get current(): BehaviorTreeNodeInterface {
-        return this.nodes[this.currentIndex]
+        return this.nodes[this.currentIndex];
     }
 
     public constructor(public nodes: BehaviorTreeNodeInterface[]) {
@@ -24,8 +24,8 @@ export default class NodeEnumerator implements Iterable<BehaviorTreeNodeInterfac
                 }
 
                 return result;
-            }
-        }
+            },
+        };
     }
 
     public next(): number {

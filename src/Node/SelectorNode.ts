@@ -1,8 +1,8 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
+import NodeEnumerator from "../NodeEnumerator";
 import TimeData from "../TimeData";
 import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import ParentBehaviorTreeNodeInterface from "./ParentBehaviorTreeNodeInterface";
-import NodeEnumerator from "../NodeEnumerator";
 
 /**
  * Selects the first node that succeeds. Tries successive nodes until it finds one that doesn't fail.
@@ -38,7 +38,7 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
             this.enumerator.next();
         }
 
-        while(this.enumerator.current !== null) {
+        while (this.enumerator.current !== null) {
             const status = await this.enumerator.current.tick(time);
             if (status !== BehaviorTreeStatus.Failure) {
                 if (status === BehaviorTreeStatus.Success) {

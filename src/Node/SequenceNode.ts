@@ -1,8 +1,8 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
+import NodeEnumerator from "../NodeEnumerator";
 import TimeData from "../TimeData";
 import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import ParentBehaviorTreeNodeInterface from "./ParentBehaviorTreeNodeInterface";
-import NodeEnumerator from "../NodeEnumerator";
 
 /**
  * Runs child nodes in sequence, until one fails.
