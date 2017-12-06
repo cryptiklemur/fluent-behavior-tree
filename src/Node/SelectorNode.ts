@@ -22,7 +22,7 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
      */
     private enumerator?: NodeEnumerator;
 
-    public constructor(public readonly name: string, private readonly keepState: boolean) {
+    public constructor(public readonly name: string, private readonly keepState: boolean = false) {
     }
 
     public init(): void {
@@ -30,7 +30,7 @@ export default class SelectorNode implements ParentBehaviorTreeNodeInterface {
     }
 
     public async tick(state: StateData): Promise<BehaviorTreeStatus> {
-        if (!this.enumerator && this.keepState) {
+        if (!this.enumerator || !this.keepState) {
             this.init();
         }
 

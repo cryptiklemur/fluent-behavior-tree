@@ -7,8 +7,8 @@ import SelectorNode from "../../src/Node/SelectorNode";
 
 let testObject: SelectorNode;
 
-function init(): void {
-    testObject = new SelectorNode("some-selector");
+function init(keepState: boolean = false): void {
+    testObject = new SelectorNode("some-selector", keepState);
 }
 
 test("runs the first node if it succeeds", async (assert) => {
@@ -84,7 +84,7 @@ test("fails when all children fail", async (assert) => {
 });
 
 test("only evaluates the current node", async (assert) => {
-    init();
+    init(true);
     const state = new StateData();
     const mockChild1 = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
     mockChild1.setup(async (m) => await m.tick(state))

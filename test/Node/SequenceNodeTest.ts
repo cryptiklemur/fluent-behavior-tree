@@ -7,8 +7,8 @@ import SequenceNode from "../../src/Node/SequenceNode";
 
 let testObject: SequenceNode;
 
-function init(): void {
-    testObject = new SequenceNode("some-sequence");
+function init(keepState: boolean = false): void {
+    testObject = new SequenceNode("some-sequence", keepState);
 }
 
 test("can run all children in order", async (assert) => {
@@ -91,7 +91,7 @@ test("when second child fails, then entire sequence fails", async (assert) => {
 });
 
 test("only evaluates the current node", async (assert) => {
-    init();
+    init(true);
     const state       = new StateData();
     const mockChild1 = TypeMoq.Mock.ofType<BehaviorTreeNodeInterface>();
     mockChild1.setup(async (m) => await m.tick(state))
