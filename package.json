@@ -1,45 +1,49 @@
 {
-    "name": "fluent-behavior-tree",
-    "version": "1.2.1",
-    "description": "Behavior tree library with a fluent API",
-    "main": "dist/index.js",
-    "repository": {
+    "name":            "fluent-behavior-tree",
+    "version":         "1.2.1",
+    "description":     "Behavior tree library with a fluent API",
+    "main":            "dist/index.js",
+    "repository":      {
         "type": "git",
-        "url": "git+ssh://git@github.com/aequasi/fluent-behavior-tree"
+        "url":  "git+ssh://git@github.com/aequasi/fluent-behavior-tree"
     },
-    "scripts": {
-        "test": "rm -r test/dist; tsc -v && tsc -p test/ && ava -v",
-        "compile": "npm run lint && tsc -p ./",
-        "precommit": "npm run compile",
+    "scripts":         {
+        "test":           "rm -r test/dist; tsc -v && tsc -p test/ && ava -v",
+        "testCi":         "tsc && tsc -p test && nyc nyc --reporter=html --reporter=text ava",
+        "coverage":       "nyc report --reporter=text-lcov | coveralls",
+        "compile":        "npm run lint && tsc -p ./",
+        "precommit":      "npm run compile",
         "prepublishOnly": "npm run compile",
-        "lint": "tslint -c tslint.json 'src/**/*.ts' --exclude 'src/**/*.d.ts' --fix",
-        "watch": "nodemon -e ts -w src --exec 'npm run compile'"
+        "lint":           "tslint -c tslint.json 'src/**/*.ts' --exclude 'src/**/*.d.ts' --fix",
+        "watch":          "nodemon -e ts -w src --exec 'npm run compile'"
     },
-    "author": "Aaron Scherer <aequasi@gmail.com> (http://aaronscherer.me)",
-    "license": "MIT",
-    "dependencies": {
+    "author":          "Aaron Scherer <aequasi@gmail.com> (http://aaronscherer.me)",
+    "license":         "MIT",
+    "dependencies":    {
         "ts-data.stack": "^1.0.6",
-        "ts-iterable": "^1.0.1"
+        "ts-iterable":   "^1.0.1"
     },
     "devDependencies": {
         "@types/es6-promise": "0.0.33",
-        "@types/node": "^8.0.55",
-        "ava": "^0.24.0",
-        "husky": "^0.14.3",
-        "tslint": "^5.8.0",
-        "typemoq": "^2.1.0",
-        "typescript": "^2.6.2"
+        "@types/node":        "^8.0.55",
+        "ava":                "^0.24.0",
+        "coveralls":          "^3.0.0",
+        "husky":              "^0.14.3",
+        "nyc":                "^11.3.0",
+        "tslint":             "^5.8.0",
+        "typemoq":            "^2.1.0",
+        "typescript":         "^2.6.2"
     },
-    "ava": {
-        "files": [
+    "ava":             {
+        "files":  [
             "test/dist/**/*Test.js"
         ],
         "source": [
             "dist/**/*.js"
         ]
     },
-    "bugs": {
+    "bugs":            {
         "url": "https://github.com/aequasi/fluent-behavior-tree/issues"
     },
-    "homepage": "https://github.com/aequasi/fluent-behavior-tree#readme"
+    "homepage":        "https://github.com/aequasi/fluent-behavior-tree#readme"
 }
