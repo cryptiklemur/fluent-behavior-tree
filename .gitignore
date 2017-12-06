@@ -1,2 +1,5 @@
 package-lock.json
 dist
+test/dist
+.nyc_output
+node_modules
