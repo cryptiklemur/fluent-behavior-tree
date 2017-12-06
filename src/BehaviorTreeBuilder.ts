@@ -66,11 +66,12 @@ export default class BehaviorTreeBuilder {
     /**
      * Create a sequence node.
      *
-     * @param {string} name
+     * @param {string}  name
+     * @param {boolean} keepState
      * @returns {BehaviorTreeBuilder}
      */
-    public sequence(name: string): BehaviorTreeBuilder {
-        return this.addParentNode(new SequenceNode(name));
+    public sequence(name: string, keepState: boolean = true): BehaviorTreeBuilder {
+        return this.addParentNode(new SequenceNode(name, keepState));
     }
 
     /**
@@ -88,11 +89,12 @@ export default class BehaviorTreeBuilder {
     /**
      * Create a selector node.
      *
-     * @param {string} name
+     * @param {string}  name
+     * @param {boolean} keepState
      * @returns {BehaviorTreeBuilder}
      */
-    public selector(name: string): BehaviorTreeBuilder {
-        return this.addParentNode(new SelectorNode(name));
+    public selector(name: string, keepState: boolean = true): BehaviorTreeBuilder {
+        return this.addParentNode(new SelectorNode(name, keepState));
     }
 
     /**
