@@ -9,12 +9,12 @@ import ParallelNode from "./Node/ParallelNode";
 import ParentBehaviorTreeNodeInterface from "./Node/ParentBehaviorTreeNodeInterface";
 import SelectorNode from "./Node/SelectorNode";
 import SequenceNode from "./Node/SequenceNode";
-import TimeData from "./StateData";
+import StateData from "./StateData";
 
 export {
     BehaviorTreeBuilder,
     BehaviorTreeStatus,
-    TimeData,
+    StateData,
     BehaviorTreeNodeInterface,
     ParentBehaviorTreeNodeInterface,
     ActionNode,
