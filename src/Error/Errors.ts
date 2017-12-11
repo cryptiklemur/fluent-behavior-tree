@@ -4,6 +4,7 @@ enum Errors {
     INVERTER_NO_CHILDREN       = "InverterNode must have a child node!",
     INVERTER_MULTIPLE_CHILDREN = "Can't add more than a single child to InverterNode!",
     UNNESTED_ACTION_NODE       = "Can't create an unnested ActionNode. It must be a leaf node.",
+    NO_RETURN_VALUE            = "Node must return a BehaviorTreeStatus",
 }
 
 export default Errors;
