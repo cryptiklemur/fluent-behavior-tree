@@ -1,8 +1,8 @@
 import BehaviorTreeStatus from "../BehaviorTreeStatus";
-import StateData from "../StateData";
-import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 import BehaviorTreeError from "../Error/BehaviorTreeError";
 import Errors from "../Error/Errors";
+import StateData from "../StateData";
+import BehaviorTreeNodeInterface from "./BehaviorTreeNodeInterface";
 
 /**
  * A behavior tree leaf node for running an action
@@ -20,7 +20,7 @@ export default class ActionNode implements BehaviorTreeNodeInterface {
     public async tick(state: StateData): Promise<BehaviorTreeStatus> {
         const result = await this.fn(state);
         if (!result) {
-            throw new BehaviorTreeError(Errors.NO_RETURN_VALUE)
+            throw new BehaviorTreeError(Errors.NO_RETURN_VALUE);
         }
 
         return result;
