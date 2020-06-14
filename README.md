@@ -29,7 +29,7 @@ npm install -s fluent-behavior-tree
 A behavior tree is created through *BehaviorTreeBuilder*. The tree is returned when the *build* function is called.
 
 ```
-import {BehaviorTreeBuilder, BehaviorTreeStatus, TimeData} from "fluent-behavior-tree";
+import {BehaviorTreeBuilder, BehaviorTreeStatus, StateData} from "fluent-behavior-tree";
 
 // ...
 
@@ -54,7 +54,7 @@ Then, *Tick* the behavior tree on each *update* of your *loop*
 
 ```
 public async update(deltaTime: number): Promise<void> {
-    await this.tree.tick(new TimeData(deltaTime));
+    await this.tree.tick(new StateData(deltaTime));
 }
 ```
 
